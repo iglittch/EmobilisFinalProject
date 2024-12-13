@@ -1,0 +1,31 @@
+
+
+{% extends 'base_signup.html' %}
+
+{% block title %}Hospital Signup{% endblock %}
+
+{% block content %}
+    <!-- Sign-up Form Section -->
+    <div class="signup-form">
+        <div class="signup-container">
+            <h2>Hospital Sign Up</h2>
+            <form method="POST" action="{% url 'hospital_dashboard' %}">
+                {% csrf_token %}
+                <input type="text" name="hospital_name" placeholder="Hospital Name" required>
+                <input type="text" name="contact_person" placeholder="Contact Person Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="phone_number" placeholder="Phone Number" required>
+                <input type="text" name="address" placeholder="Hospital Address" required>
+                <input type="text" name="hospital_type" placeholder="Type of Hospital" required>
+                <input type="text" name="specialization" placeholder="Specialization (if any)" required>
+                <input type="text" name="emergency_contact" placeholder="Emergency Contact" required>
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Decorative Shapes -->
+    <div class="circle"></div>
+    <div class="triangle"></div>
+
+    {% endblock %}

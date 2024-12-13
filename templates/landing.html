@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to OncoCare{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero">
+    <div class="container">
+        <h1>Welcome to OncoCare</h1>
+        <p>Your trusted partner in cancer care management.</p>
+        <a href="{% url 'signup' %}" class="btn btn-primary">Get Started</a>
+    </div>
+    <!-- Decorative Shapes -->
+    <div class="circle"></div>
+    <div class="triangle"></div>
+</div>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+    <div class="container">
+        <h2>About OncoCare</h2>
+        <p>OncoCare is dedicated to supporting patients and caregivers in their cancer journey with personalized services and tools.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <h2>Our Services</h2>
+        <ul>
+            <li>Appointment scheduling with oncology specialists</li>
+            <li>Personalized treatment tracking</li>
+            <li>Support group connections</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feel free to reach out at <a href="mailto:info@oncocare.com">info@oncocare.com</a>.</p>
+    </div>
+</section>
+{% endblock %}

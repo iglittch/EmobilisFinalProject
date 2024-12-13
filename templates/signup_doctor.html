@@ -1,0 +1,30 @@
+{% load static %}
+
+{% extends 'base_signup.html' %}
+
+{% block title %}Doctor Signup{% endblock %}
+
+{% block content %}
+    <!-- Sign-up Form Section -->
+    <div class="hero">
+        <div class="signup-form">
+            <div class="signup-container">
+                <h2>Doctor Sign Up</h2>
+                <form method="POST" action="{% url 'doctor_dashboard' %}">
+                    {% csrf_token %}
+                    <input type="text" name="first_name" placeholder="First Name" required>
+                    <input type="text" name="last_name" placeholder="Last Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="text" name="specialization" placeholder="Specialization" required>
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Shapes -->
+    <div class="circle"></div>
+    <div class="triangle"></div>
+
+    {% endblock %}

@@ -1,0 +1,203 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}OncoCare-Signup{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/fav2.png' %}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #fdfdfd;
+            background: linear-gradient(135deg, #f0f4ff, #ffecec);
+        }
+
+        /* Geometric Shapes for Background */
+        .circle {
+            width: 300px;
+            height: 300px;
+            background: #fef6e4;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            left: -50px;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 200px solid #eae9ff;
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: transparent;
+            box-shadow: none;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #4a4a4a;
+            font-size: 1.8rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #85c1e9;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #4a4a4a;
+            font-weight: bold;
+        }
+
+        .navbar .get-started-btn {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: #85c1e9;
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
+
+        .navbar .get-started-btn:hover {
+            background-color: #65b2e0;
+            text-decoration: none;
+        }
+
+        /* Sign-up Form Section with Glassmorphism */
+        .signup-form {
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .signup-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .signup-container input {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #333;
+            font-size: 0.9rem;
+            padding: 0.7rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .signup-container input:focus {
+            border-color: #85c1e9;
+            outline: none;
+            box-shadow: 0 0 10px rgba(133, 193, 233, 0.5);
+        }
+
+        .btn-submit {
+            background-color: #85c1e9;
+            color: white;
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+
+        /* Footer Section */
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #f0f4ff;
+            color: #4a4a4a;
+        }
+
+        footer a {
+            color: #85c1e9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">OncoCare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <!-- <a href="{% url 'login' %}" class="get-started-btn">Get Started</a> -->
+            </div>
+        </div>
+    </nav>
+  <!-- Main Content -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+      <!-- Footer -->
+      <footer>
+        <p>&copy; 2024 OncoCare. All Rights Reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        <p>Developed by Tanya Jama👩🏿‍💻</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

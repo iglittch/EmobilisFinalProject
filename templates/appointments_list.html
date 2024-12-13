@@ -1,0 +1,11 @@
+<!-- patient_profile.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Appointments</h2>
+<ul>
+    {% for appointment in appointments %}
+        <li>{{ appointment.doctor.name }} on {{ appointment.appointment_date }} at {{ appointment.time }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

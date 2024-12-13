@@ -1,0 +1,27 @@
+{% extends 'base_signup.html' %}
+
+{% block title %}Patient Signup{% endblock %}
+
+{% block content %}
+    <div class="signup-form">
+        <div class="signup-container">
+            <h2>Patient Sign Up</h2>
+            <form method="POST" action="{% url 'patient_signup' %}">
+                {% csrf_token %}
+                
+                <!-- Input fields for patient data -->
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="phone_number" placeholder="Phone Number" required>
+                <input type="date" name="dob" placeholder="Date of Birth" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="text" name="cancer_type" placeholder="Type of Cancer (if known)">
+                <input type="text" name="treatment_status" placeholder="Current Treatment Status" required>
+                <input type="text" name="emergency_contact" placeholder="Emergency Contact" required>
+                
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

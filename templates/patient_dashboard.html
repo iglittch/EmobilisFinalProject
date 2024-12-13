@@ -1,0 +1,154 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Patient Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light p-4">
+            <h4 class="text-center mb-4">Dashboard</h4>
+            <div class="list-group">
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action active" onclick="showTab('overview')">Overview</a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action" onclick="showTab('appointments')">Appointments</a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action" onclick="showTab('hospitals')">Hospitals</a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action" onclick="showTab('doctors')">Doctors</a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action" onclick="showTab('profile')">Profile</a>
+                <a href="javascript:void(0);" class="list-group-item list-group-item-action" onclick="showTab('settings')">Settings</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 p-4">
+            <h2 class="text-center mb-4">Welcome, {{ request.user.patient.first_name }}!</h2>
+
+            <!-- Overview Section -->
+            <div id="overview" class="tab-content active">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Overview</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
+                        <p><strong>Email:</strong> {{ patient.email }}</p>
+                        <p><strong>Phone:</strong> {{ patient.phone_number }}</p>
+                        <p><strong>Treatment Status:</strong> {{ patient.treatment_status }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+            <div id="appointments" class="tab-content">
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h4>Your Appointments</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if appointments %}
+                            <ul class="list-group">
+                                {% for appointment in appointments %}
+                                    <li class="list-group-item">
+                                        <strong>Doctor:</strong> {{ appointment.doctor_name }}<br>
+                                        <strong>Hospital:</strong> {{ appointment.hospital_name }}<br>
+                                        <strong>Date:</strong> {{ appointment.appointment_date }}<br>
+                                        <strong>Status:</strong> {{ appointment.status }}<br>
+
+                                        <!-- Edit Appointment Button -->
+                                        <button class="btn btn-warning btn-sm" onclick="showEditForm('{{ appointment.id }}')">Edit</button>
+
+                                        <!-- Cancel Appointment Button -->
+                                        <a href="{% url 'cancel-appointment' appointment.id %}" class="btn btn-danger btn-sm">Cancel</a>
+
+                                        <!-- Edit Form (Hidden by default) -->
+                                        <div id="edit-form-{{ appointment.id }}" style="display:none;">
+                                            <form method="POST" action="{% url 'update-appointment' appointment.id %}">
+                                                {% csrf_token %}
+                                                <div class="mb-3">
+                                                    <label for="doctor" class="form-label">Choose Doctor</label>
+                                                    <select class="form-select" name="doctor" required>
+                                                        {% for doctor in doctors %}
+                                                            <option value="{{ doctor.id }}" {% if doctor.id == appointment.doctor_id %}selected{% endif %}>{{ doctor.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="appointment_date" class="form-label">Appointment Date and Time</label>
+                                                    <input type="datetime-local" class="form-control" name="appointment_date" value="{{ appointment.appointment_date|date:'Y-m-d\TH:i' }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="reason_for_visit" class="form-label">Reason for Visit</label>
+                                                    <textarea class="form-control" name="reason_for_visit" rows="3" required>{{ appointment.reason_for_visit }}</textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Update Appointment</button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No appointments scheduled.</p>
+                        {% endif %}
+                        <hr>
+                        <h5>Book an Appointment</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="doctor" class="form-label">Choose Doctor</label>
+                                <select class="form-select" name="doctor" required>
+                                    {% for doctor in doctors %}
+                                        <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="appointment_date" class="form-label">Appointment Date and Time</label>
+                                <input type="datetime-local" class="form-control" name="appointment_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reason_for_visit" class="form-label">Reason for Visit</label>
+                                <textarea class="form-control" name="reason_for_visit" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display doctors -->
+            <div id="doctors">
+                <h2 class="text-center mb-4">Doctors near you</h2>
+                {% for doctor in doctors %}
+                    <div>
+                        <strong>{{ doctor.name }}</strong><br>
+                        <strong>Specialty:</strong> {{ doctor.specialty }}<br>
+                        <strong>Hospital:</strong> {{ doctor.hospital }}<br>
+                        <a href="{% url 'doctor_detail' doctor.id %}">View Details</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Display hospitals -->
+            <div id="hospitals">
+                <h2 class="text-center mb-4">Hospitals near you</h2>
+                {% for hospital in hospitals %}
+                    <div>
+                        <strong>{{ hospital.name }}</strong><br>
+                        <strong>Location:</strong> {{ hospital.location }}<br>
+                        <a href="{% url 'hospital_detail' hospital.id %}">View Details</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <script>
+                // Function to show the edit form for a specific appointment
+                function showEditForm(appointmentId) {
+                    var form = document.getElementById('edit-form-' + appointmentId);
+                    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+                }
+            </script>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
